@@ -7,11 +7,18 @@
     };
 
     function loadContent(href) {
-        $("#body").load(href + " #body", function (data) {
-            var $html = $("<div />").append($.parseHTML(data));
-            $("head>title").remove();
-            $html.find("title").prependTo("head");   
-        });
+        var r = new XMLHttpRequest();
+        r.open("GET", href, true);
+        r.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        r.onreadystatechange = function () {
+            if (r.readyState != 4 || r.status != 200) return;
+            var response = JSON.parse(r.response);
+            $(".main-content").html(response.Body);
+            console.log("success");
+            console.log(r.getAllResponseHeaders());
+            $("title").text(response.Title);
+        };
+        r.send();
     }
 
     $("#menu a").click(function (event) {
