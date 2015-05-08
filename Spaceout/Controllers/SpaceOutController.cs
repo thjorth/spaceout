@@ -1,8 +1,10 @@
 ﻿using System.Web.Mvc;
+using Spaceout.Infrastructure.Filters;
 using Spaceout.Infrastructure.Http;
 
 namespace Spaceout.Controllers
 {
+    [MetaDataFilter]
     public class SpaceOutController : Controller
     {
         protected override ViewResult View(string viewName, string masterName, object model)
