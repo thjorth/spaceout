@@ -8,6 +8,10 @@
 *.user
 *.userosscache
 *.sln.docstates
+bin
+obj
+_Resharper*
+Thumbs.db
 
 # Build results
 [Dd]ebug/
