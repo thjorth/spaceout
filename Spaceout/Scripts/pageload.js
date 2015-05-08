@@ -8,12 +8,22 @@
     };
 
     function loadContent(href) {
-        $("#body").load(href + " #body", function (data) {
-            var $html = $("<div />").append($.parseHTML(data));
-            $("head>title").remove();
-            $html.find("title").prependTo("head");
+        $.ajax({
+            url: href
+        })
+        .done(function(data, status, xhr) {
+            $(".main-content").html(data);
+            console.log("success");
+            console.log(xhr.getAllResponseHeaders());
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
             $("#loading").hide();
         });
+        
     }
 
     $("#menu a").click(function (event) {
