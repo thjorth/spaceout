@@ -2,39 +2,22 @@
 
 namespace Spaceout.Infrastructure.Http
 {
-    public class DynamicResult : ActionResult
+    public class CustomPartialViewResult : ViewResult
     {
-        public string ViewName { get; set; }
+        public ViewResultBase Res { get; set; }
 
-        public DynamicResult()
+        public CustomPartialViewResult(ViewResultBase res)
         {
-            
+            Res = res;
         }
-
-        public DynamicResult(string viewName)
-        {
-            ViewName = viewName;
-        }
-        
 
         public override void ExecuteResult(ControllerContext context)
         {
-            var usePartial = context.HttpContext.Request.IsAjaxRequest();
-            ActionResult res = GetInnerViewResult(usePartial);
-            res.ExecuteResult(context);
+            Res.ExecuteResult(context);
         }
-
-        private ActionResult GetInnerViewResult(bool usePartial)
+        public static ViewResult Convert(ViewResultBase res)
         {
-            var view = ViewName;
-            ViewResult res = new ViewResult();
-
-            /*if (string.IsNullOrEmpty(view))
-                res = usePartial ? new PartialViewResult {} : new ViewResult();
-            else
-                res = usePartial ? new PartialViewResult() : new ViewResult();*/
-
-            return res;
+            return new CustomPartialViewResult(res);
         }
     }
 }
