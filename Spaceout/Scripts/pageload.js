@@ -16,6 +16,7 @@
             $(".main-content").html(r.response);
             console.log("success");
             console.log(r.getAllResponseHeaders());
+            $("title").text(r.getResponseHeader("x-title"));
         };
         r.send();
         
